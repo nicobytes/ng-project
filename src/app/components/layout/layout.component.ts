@@ -14,15 +14,17 @@ import { User } from './../../models/auth.model';
 export class LayoutComponent implements OnInit {
 
   user: User | null = null;
-  private breakpointObserver = inject(BreakpointObserver);
-  private authService = inject(AuthService);
-  private router = inject(Router);
-
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches),
       shareReplay()
     );
+
+  constructor(
+    private authService: AuthService,
+    private router: Router,
+    private breakpointObserver: BreakpointObserver,
+  ) { }
 
   ngOnInit() {
     this.authService.getProfile()

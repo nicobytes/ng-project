@@ -12,11 +12,13 @@ import { TokenService } from './../services/token.service';
 })
 export class AuthService {
 
-  private http = inject(HttpClient);
-  private tokenService = inject(TokenService);
-
   private authState = new BehaviorSubject<User | null>(null);
   authState$ = this.authState.asObservable();
+
+  constructor(
+    private http: HttpClient,
+    private tokenService: TokenService,
+  ) {}
 
   login(email: string, password: string) {
     const url = `${environment.API_URL}/auth/login`;
